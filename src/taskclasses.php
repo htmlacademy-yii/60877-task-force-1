@@ -32,40 +32,40 @@ class StatusesAndActions
 
     public function returnMapActions()
     {
-        $mapActions = [
+
+        return   [
             ACTION_EXECUTE => 'execute',
             ACTION_DONE => 'done',
             ACTION_CANCEL => 'cancel',
             ACTION_DENY => 'deny'
         ];
-        return $mapActions;
     }
 
-    public function getStatuses()
+    public function getStatuses($status)
     {
-        if (STATUS_NEW) {
+        if (STATUS_NEW===$status) {
 return ACTION_EXECUTE;
-        } else if (STATUS_CANCELLED) {
+        } else if (STATUS_CANCELLED===$status) {
 return ACTION_CANCEL;
-        } else if (STATUS_INWORK) {
+        } else if (STATUS_INWORK===$status) {
        return  ACTION_EXECUTE;
-        } else if (STATUS_DONE) {
+        } else if (STATUS_DONE===$status) {
       return ACTION_DONE;
-        } else if (STATUS_FAILED) {
+        } else if (STATUS_FAILED===$status) {
 return [ACTION_CANCEL, ACTION_DENY];
         }
     }
 
-    public function getActions()
+    public function getActions($action)
     {
 
-        if (ACTION_EXECUTE) {
+        if (ACTION_EXECUTE ===$action) {
             return STATUS_INWORK;
-        } else if (ACTION_DONE) {
+        } else if (ACTION_DONE===$action) {
             return STATUS_DONE;
-        } else if (ACTION_CANCEL) {
+        } else if (ACTION_CANCEL===$action) {
             return STATUS_CANCELLED;
-        } else if (ACTION_DENY) {
+        } else if (ACTION_DENY===$action) {
             return STATUS_FAILED;
         }
     }
