@@ -1,5 +1,7 @@
 <?php
 
+namespace htmlacademy;
+
 class StatusesAndActions
 {
     const STATUS_NEW = "Новое";

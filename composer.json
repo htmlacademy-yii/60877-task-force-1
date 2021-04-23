@@ -1,0 +1,11 @@
+{
+    "name": "htmlacademy/taskforce1",
+    "description": "Yii PHP Framework my first try",
+    "require": {},
+
+    "autoload": {
+      "psr-4": {
+          "htmlacademy\\": "src/"
+      }
+  }
+}
