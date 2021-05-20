@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 04 2021 г., 17:16
+-- Время создания: Май 20 2021 г., 17:54
 -- Версия сервера: 5.7.25
 -- Версия PHP: 7.3.9
 
@@ -25,44 +25,95 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `create_task`
+-- Структура таблицы `categories`
 --
 
-CREATE TABLE `create_task` (
+CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
-  `i_need` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `job_details` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `categories` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `files` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `location` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `budget` int(100) NOT NULL,
-  `final_date` date NOT NULL,
-  `rools_good_deskription` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `name` varchar(255) NOT NULL,
+  `icon` int(255) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `newtasks`
+-- Структура таблицы `cities`
 --
 
-CREATE TABLE `newtasks` (
-  `new_task_header` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `new_task_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `new_task_text` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `new_task_place` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `new_task_price` int(11) NOT NULL,
-  `new_task_time` time(6) NOT NULL,
-  `courier_services` int(11) NOT NULL,
-  `cargo_moving` tinyint(1) NOT NULL,
-  `translations` tinyint(1) NOT NULL,
-  `building_fixing` tinyint(1) NOT NULL,
-  `walking_animals` tinyint(1) NOT NULL,
-  `no_response` tinyint(1) NOT NULL,
-  `remote_work` tinyint(1) NOT NULL,
-  `period` tinyint(1) NOT NULL,
-  `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `cities` (
+  `id` int(11) NOT NULL,
+  `lat` float NOT NULL,
+  `long` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `favourites`
+--
+
+CREATE TABLE `favourites` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `task_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `text` varchar(255) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `task_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `creation_time` date NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `task_id` int(11) NOT NULL,
+  `is_view` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `opinions`
+--
+
+CREATE TABLE `opinions` (
+  `id` int(11) NOT NULL,
+  `dt_add` date NOT NULL,
+  `rate` int(11) NOT NULL,
+  `deskription` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `portfolio`
+--
+
+CREATE TABLE `portfolio` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `photo` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -72,85 +123,99 @@ CREATE TABLE `newtasks` (
 
 CREATE TABLE `profiles` (
   `id` int(11) NOT NULL,
-  `avatarphoto` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `birthday` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `information_about_you` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `specializations` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `courier_services` tinyint(1) NOT NULL,
-  `workphoto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telephone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `skype` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telegram` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `newmessage` tinyint(1) NOT NULL,
-  `action_to_task` tinyint(1) NOT NULL,
-  `newreview` tinyint(1) NOT NULL,
-  `show_my_contacts_only_customer` tinyint(1) NOT NULL,
-  `do_not_show_my_profile` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `address` varchar(255) NOT NULL,
+  `bd` varchar(255) NOT NULL,
+  `about` varchar(255) NOT NULL,
+  `phone` int(11) NOT NULL,
+  `skype` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `signup`
+-- Структура таблицы `replies`
 --
 
-CREATE TABLE `signup` (
+CREATE TABLE `replies` (
   `id` int(11) NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `your_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city_to_live` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `dt_add` int(11) NOT NULL,
+  `rate` int(11) NOT NULL,
+  `deskription` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `user`
+-- Структура таблицы `tasks`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `tasks` (
   `id` int(11) NOT NULL,
-  `user_photo` int(11) NOT NULL,
-  `user_name` int(11) NOT NULL,
-  `user_country_age` int(11) NOT NULL,
-  `user_rating` int(11) NOT NULL,
-  `user_time_ago` int(11) NOT NULL,
-  `user_done_orders` int(11) NOT NULL,
-  `user_got_orders` int(11) NOT NULL,
-  `user_deskription` int(11) NOT NULL,
-  `user_specializations` int(11) NOT NULL,
-  `user_phone_contacts` int(11) NOT NULL,
-  `user_email_contacts` int(11) NOT NULL,
-  `user_card_photo` int(11) NOT NULL,
-  `user_reviews` int(11) NOT NULL,
-  `user_reviews_task` int(11) NOT NULL,
-  `user_reviews_photo` int(11) NOT NULL,
-  `user_reviews_name` int(11) NOT NULL,
-  `user_reviews_deskription` int(11) NOT NULL,
-  `user_reviews_rate` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `client_id` int(11) NOT NULL,
+  `final_date` date NOT NULL,
+  `dt_add` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `deskription` varchar(255) NOT NULL,
+  `expire` date NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `budget` int(11) NOT NULL,
+  `lat` float NOT NULL,
+  `long` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `password` int(11) NOT NULL,
+  `dt_add` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Индексы сохранённых таблиц
 --
 
 --
--- Индексы таблицы `create_task`
+-- Индексы таблицы `categories`
 --
-ALTER TABLE `create_task`
+ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `newtasks`
+-- Индексы таблицы `cities`
 --
-ALTER TABLE `newtasks`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`id`);
+ALTER TABLE `cities`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `favourites`
+--
+ALTER TABLE `favourites`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `opinions`
+--
+ALTER TABLE `opinions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `portfolio`
+--
+ALTER TABLE `portfolio`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `profiles`
@@ -159,9 +224,21 @@ ALTER TABLE `profiles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `signup`
+-- Индексы таблицы `replies`
 --
-ALTER TABLE `signup`
+ALTER TABLE `replies`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `tasks`
+--
+ALTER TABLE `tasks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `users`
+--
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -169,15 +246,39 @@ ALTER TABLE `signup`
 --
 
 --
--- AUTO_INCREMENT для таблицы `create_task`
+-- AUTO_INCREMENT для таблицы `categories`
 --
-ALTER TABLE `create_task`
+ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `newtasks`
+-- AUTO_INCREMENT для таблицы `cities`
 --
-ALTER TABLE `newtasks`
+ALTER TABLE `cities`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `favourites`
+--
+ALTER TABLE `favourites`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `opinions`
+--
+ALTER TABLE `opinions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `portfolio`
+--
+ALTER TABLE `portfolio`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -187,9 +288,21 @@ ALTER TABLE `profiles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `signup`
+-- AUTO_INCREMENT для таблицы `replies`
 --
-ALTER TABLE `signup`
+ALTER TABLE `replies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `tasks`
+--
+ALTER TABLE `tasks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `users`
+--
+ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
