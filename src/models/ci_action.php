@@ -2,7 +2,7 @@
 
 namespace htmlacademy\models;
 
-class AbstractClass
+abstract class AbstractClass
 {
     protected $inner_name;
 	protected $public_name;
@@ -14,7 +14,7 @@ class AbstractClass
         public function get_public_name () {
             return $this->$public_name;
         }
-    };
+    }
 
 
 
