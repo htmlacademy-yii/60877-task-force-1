@@ -1,6 +1,5 @@
 <?php
 
-
 namespace htmlacademy\models;
 use htmlacademy\models\act_done;
 use htmlacademy\models\act_execute;
@@ -15,72 +14,90 @@ class Task
     const STATUS_FAILED = "failed";
     const STATUS_CANCELLED = "canceled";
 
-    const ACTION_EXECUTE = 'execute';
-    const ACTION_DONE = 'done';
-    const ACTION_CANCEL = 'cancel';
-    const ACTION_DENY = 'deny';
+    const ACTION_EXECUTE = "execute";
+    const ACTION_DONE = "done";
+    const ACTION_CANCEL = "cancel";
+    const ACTION_DENY = "deny";
 
-    private $executer_id;
-	private $customer_id;
-	private $status = self::STATUS_NEW; //что тут дергается? Просмотри
+    public function actionArray () {
+        $array = [
+            self::STATUS_NEW => [new actExecute(), new actCancel()],
+            self::STATUS_EXECUTE => [new actDone(), new actDeny()],
+        ];
+        return $array;
+    }
 
-	public function __construct($customer_id = null, $executer_id = null){
-		$this->customer_id = $customer_id; // откуда тут данная переменная
-		$this->executer_id = $executer_id; // откуда тут данная переменная
-	}
+
+    private $executerId;
+    private $customerId;
+    private $status = self::STATUS_NEW; //что тут дергается? Просмотри
+
+    public function testStatus() {
+        return $this->status;
+    }
+
+
+    public function __construct($customerId = null, $executerId = null)
+    {
+        $this->customerId = $customerId;
+        $this->executerId = $executerId;
+    }
 
     public function returnMapStatuses()
     {
-        $mapStatuses = [
-            self::STATUS_NEW => 'Новое',
-            self::STATUS_EXECUTE => 'В работе',
-            self::STATUS_DONE => 'Выполнено',
-            self::STATUS_FAIL => 'Провалено',
-            self::STATUS_CANCEL => 'Отменено'
+        return [
+            self::STATUS_NEW => "Новое",
+            self::STATUS_EXECUTE => "В работе",
+            self::STATUS_DONE => "Выполнено",
+            self::STATUS_FAIL => "Провалено",
+            self::STATUS_CANCEL => "Отменено",
         ];
-        return $mapStatuses;
     }
 
     public function returnMapActions()
     {
-
-        return   [
+        return [
             self::ACTION_EXECUTE => self::STATUS_EXECUTE,
             self::ACTION_DONE => self::STATUS_DONE,
             self::ACTION_CANCEL => self::STATUS_CANCEL,
-            self::ACTION_DENY => self::STATUS_FAIL
+            self::ACTION_DENY => self::STATUS_FAIL,
         ];
     }
 
-public function getActions($status, $idExecutor, $idTaskmaker, $idUser)
-{
-    $array = [self::STATUS_NEW => [new Act_execute(), new Act_cancel()],
-    self::STATUS_EXECUTE => [new Act_done(), new Act_deny()]];
-  $actions = $array[$status]; // что в данном случае будет в $status?
-  foreach($actions as $action){
-    if($action->check_user($idcustomer, $idexecuter, $iduser)){
-        return $action;
+    public function getActions($status, $idExecutor, $idTaskmaker, $idUser)
+    {
+
+        if (array_key_exists($status, $actions)){
+            $actions  = $this->actionArray()[$status];
+        }
+
+        foreach ($actions as $action) {
+            if ($action->CheckRights($idExecutor, $idTaskmaker, $idUser)) {
+                return $action;
+            }
+        }
+        return false;
+    }
+
+    public function nextStatus(string $action)
+    {
+        $stmap = $this->statusMap[$action];
+        return $this->statusArray[$stmap];
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function getCustomer()
+    {
+        return $this->customerId;
+    }
+
+    public function getExecuter()
+    {
+        return $this->executerId;
     }
 }
-return false;
-}
 
-public function next_status (string $action) {
-
-    $stmap = $this->status_map[$action];
-    return $this->status_array[$stmap];
-}
-
-public function get_status(){
-    return $this->status;
-}
-
-public function get_customer(){
-    return $this->customer_id;
-}
-
-public function get_executer(){
-    return $this->executer_id;
-}
-
-}
