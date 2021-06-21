@@ -69,13 +69,13 @@ class Task
 
         if (array_key_exists($status, $actions)){
             $actions  = $this->actionArray()[$status];
-        }
+
 
         foreach ($actions as $action) {
             if ($action->CheckRights($idExecutor, $idTaskmaker, $idUser)) {
                 return $action;
             }
-        }
+        }   }
         return false;
     }
 
