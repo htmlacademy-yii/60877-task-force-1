@@ -1,7 +1,7 @@
 <?php
 
-namespace htmlacademy\models;
-use htmlacademy\models\ci_action;
+namespace Htmlacademy\Models;
+use Htmlacademy\Models\ci_action;
 
 class ActionCancel extends AbstractClass
 {
@@ -11,6 +11,6 @@ class ActionCancel extends AbstractClass
 
     public function CheckRights($idExecutor, $idTaskmaker, $idUser)
     {
-      return $idUser === $idTaskmaker;
+        return $idUser === $idTaskmaker;
     }
 }

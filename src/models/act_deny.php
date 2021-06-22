@@ -1,7 +1,7 @@
 <?php
 
-namespace htmlacademy\models;
-use htmlacademy\models\ci_action;
+namespace Htmlacademy\Models;
+use Htmlacademy\Models\ci_action;
 
 class ActionDeny extends AbstractClass
 {
@@ -11,6 +11,6 @@ class ActionDeny extends AbstractClass
 
     public function CheckRights($idExecutor, $idTaskmaker, $idUser)
     {
-      return $idUser === $idExecutor;
+        return $idUser === $idExecutor;
     }
 }

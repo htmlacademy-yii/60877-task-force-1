@@ -1,6 +1,6 @@
 <?php
 
-namespace htmlacademy\models;
+namespace Htmlacademy\Models;
 
 abstract class AbstractClass
 {

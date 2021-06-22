@@ -1,10 +1,10 @@
 <?php
 
-namespace htmlacademy\models;
-use htmlacademy\models\act_done;
-use htmlacademy\models\act_execute;
-use htmlacademy\models\act_cancel;
-use htmlacademy\models\act_deny;
+namespace Htmlacademy\Models;
+use Htmlacademy\Models\act_done;
+use Htmlacademy\Models\act_execute;
+use Htmlacademy\Models\act_cancel;
+use Htmlacademy\Models\act_deny;
 
 class Task
 {
@@ -66,16 +66,16 @@ class Task
 
     public function getActions($status, $idExecutor, $idTaskmaker, $idUser)
     {
-
+        $actions = [];
         if (array_key_exists($status, $actions)){
             $actions  = $this->actionArray()[$status];
-
-
+        }
         foreach ($actions as $action) {
             if ($action->CheckRights($idExecutor, $idTaskmaker, $idUser)) {
                 return $action;
             }
-        }   }
+        }
+
         return false;
     }
 
