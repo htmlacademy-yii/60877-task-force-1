@@ -9,7 +9,7 @@ class ActionDeny extends AbstractClass
     protected $publicName = "Отказаться";
     protected $innerName = "act_deny";
 
-    public function CheckRights($idExecutor, $idTaskmaker, $idUser)
+    public function CheckRights(int $idExecutor, int $idTaskmaker, int $idUser):bool
     {
         return $idUser === $idExecutor;
     }

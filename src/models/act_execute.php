@@ -8,7 +8,7 @@ class ActionExecute extends AbstractClass
     protected $publicName = "Выполнено";
     protected $innerName = "act_execute";
 
-    public function CheckRights($idExecutor, $idTaskmaker, $idUser)
+    public function CheckRights(int $idExecutor, int $idTaskmaker, int $idUser):bool
     {
         return $idExecutor === $idUser;
     }

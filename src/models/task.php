@@ -37,7 +37,7 @@ class Task
     }
 
 
-    public function __construct($customerId = null, $executerId = null)
+    public function __construct(int $customerId, int $executerId)
     {
         $this->customerId = $customerId;
         $this->executerId = $executerId;
@@ -64,38 +64,44 @@ class Task
         ];
     }
 
-    public function getActions($status, $idExecutor, $idTaskmaker, $idUser)
+    public function getActions(string $status, int $idExecutor, int $idTaskmaker, int $idUser)
     {
         $actions = [];
         if (array_key_exists($status, $actions)){
             $actions  = $this->actionArray()[$status];
         }
+        else {
+            throw CustomExeption ("No status in the action");
+        }
         foreach ($actions as $action) {
             if ($action->CheckRights($idExecutor, $idTaskmaker, $idUser)) {
                 return $action;
+            }
+            else {
+                throw CustomExeption ("No right action");
             }
         }
 
         return false;
     }
 
-    public function nextStatus(string $action)
+    public function nextStatus(string $action):int
     {
         $stmap = $this->statusMap[$action];
         return $this->statusArray[$stmap];
     }
 
-    public function getStatus()
+    public function getStatus():string
     {
         return $this->status;
     }
 
-    public function getCustomer()
+    public function getCustomer():int
     {
         return $this->customerId;
     }
 
-    public function getExecuter()
+    public function getExecuter():int
     {
         return $this->executerId;
     }

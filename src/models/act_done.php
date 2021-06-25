@@ -9,7 +9,7 @@ class ActionDone extends AbstractClass
     protected $publicName = "Сделано";
     protected $innerName = "act_done";
 
-    public function CheckRights($idExecutor, $idTaskmaker, $idUser)
+    public function CheckRights(int $idExecutor, int $idTaskmaker, int $idUser):bool
     {
         return $idUser === $idTaskmaker;
     }
