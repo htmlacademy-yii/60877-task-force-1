@@ -1,7 +1,7 @@
 <?php
 
 namespace Htmlacademy\Models;
-use Htmlacademy\Models\ci_action;
+use Htmlacademy\Models\ActionExecute;
 
 class ActionDone extends AbstractClass
 {
@@ -9,7 +9,7 @@ class ActionDone extends AbstractClass
     protected $publicName = "Сделано";
     protected $innerName = "act_done";
 
-    public function CheckRights(int $idExecutor, int $idTaskmaker, int $idUser):bool
+    public function checkRights(int $idExecutor, int $idTaskmaker, int $idUser):bool
     {
         return $idUser === $idTaskmaker;
     }
