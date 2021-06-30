@@ -1,10 +1,11 @@
 <?php
 
 namespace Htmlacademy\Models;
-use Htmlacademy\Models\act_done;
-use Htmlacademy\Models\act_execute;
-use Htmlacademy\Models\act_cancel;
-use Htmlacademy\Models\act_deny;
+
+use Htmlacademy\Models\ActionCancel;
+use Htmlacademy\Models\ActionDeny;
+use Htmlacademy\Models\ActionDone;
+use Htmlacademy\Models\AbstractClass;
 
 class Task
 {
@@ -30,12 +31,7 @@ class Task
 
     private $executerId;
     private $customerId;
-    private $status = self::STATUS_NEW; //что тут дергается? Просмотри
-
-    public function testStatus() {
-        return $this->status;
-    }
-
+    private $status = self::STATUS_NEW;
 
     public function __construct(int $customerId, int $executerId)
     {
@@ -67,18 +63,16 @@ class Task
     public function getActions(string $status, int $idExecutor, int $idTaskmaker, int $idUser)
     {
         $actions = [];
-        if (array_key_exists($status, $actions)){
-            $actions  = $this->actionArray()[$status];
-        }
-        else {
+
+        $statuses  = $this->actionArray();
+        if (!array_key_exists($status, $statuses)){
             throw CustomExeption ("No status in the action");
         }
+        $actions  = $statuses[$status];
+
         foreach ($actions as $action) {
             if ($action->CheckRights($idExecutor, $idTaskmaker, $idUser)) {
                 return $action;
-            }
-            else {
-                throw CustomExeption ("No right action");
             }
         }
 
