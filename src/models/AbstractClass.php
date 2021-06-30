@@ -7,7 +7,7 @@ abstract class AbstractClass
     protected $innerName;
     protected $publicName;
 
-    abstract public function CheckRights(int $idExecutor, int $idTaskmaker, int $idUser);
+    abstract public function checkRights(int $idExecutor, int $idTaskmaker, int $idUser);
 
     public function getInnerName()
     {
