@@ -1,10 +1,11 @@
 <?php
 
 namespace Htmlacademy\Models;
-use Htmlacademy\Models\act_done;
-use Htmlacademy\Models\act_execute;
-use Htmlacademy\Models\act_cancel;
-use Htmlacademy\Models\act_deny;
+
+use Htmlacademy\Models\ActionCancel;
+use Htmlacademy\Models\ActionDeny;
+use Htmlacademy\Models\ActionDone;
+use Htmlacademy\Models\AbstractClass;
 
 class Task
 {
@@ -30,14 +31,9 @@ class Task
 
     private $executerId;
     private $customerId;
-    private $status = self::STATUS_NEW; //что тут дергается? Просмотри
+    private $status = self::STATUS_NEW;
 
-    public function testStatus() {
-        return $this->status;
-    }
-
-
-    public function __construct($customerId = null, $executerId = null)
+    public function __construct(int $customerId, int $executerId)
     {
         $this->customerId = $customerId;
         $this->executerId = $executerId;
@@ -64,12 +60,16 @@ class Task
         ];
     }
 
-    public function getActions($status, $idExecutor, $idTaskmaker, $idUser)
+    public function getActions(string $status, int $idExecutor, int $idTaskmaker, int $idUser)
     {
         $actions = [];
-        if (array_key_exists($status, $actions)){
-            $actions  = $this->actionArray()[$status];
+
+        $statuses  = $this->actionArray();
+        if (!array_key_exists($status, $statuses)){
+            throw CustomExeption ("No status in the action");
         }
+        $actions  = $statuses[$status];
+
         foreach ($actions as $action) {
             if ($action->CheckRights($idExecutor, $idTaskmaker, $idUser)) {
                 return $action;
@@ -79,23 +79,23 @@ class Task
         return false;
     }
 
-    public function nextStatus(string $action)
+    public function nextStatus(string $action):int
     {
         $stmap = $this->statusMap[$action];
         return $this->statusArray[$stmap];
     }
 
-    public function getStatus()
+    public function getStatus():string
     {
         return $this->status;
     }
 
-    public function getCustomer()
+    public function getCustomer():int
     {
         return $this->customerId;
     }
 
-    public function getExecuter()
+    public function getExecuter():int
     {
         return $this->executerId;
     }
