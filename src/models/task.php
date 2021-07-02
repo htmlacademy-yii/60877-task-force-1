@@ -65,10 +65,12 @@ class Task
         $actions = [];
 
         $statuses  = $this->actionArray();
+
         if (!array_key_exists($status, $statuses)){
             throw CustomExeption ("No status in the action");
         }
-        $actions  = $statuses[$status];
+        $actions = $statuses[$status];
+       
 
         foreach ($actions as $action) {
             if ($action->CheckRights($idExecutor, $idTaskmaker, $idUser)) {
