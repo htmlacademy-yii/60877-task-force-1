@@ -6,7 +6,7 @@ use Htmlacademy\Models\ActionCancel;
 use Htmlacademy\Models\ActionDeny;
 use Htmlacademy\Models\ActionDone;
 use Htmlacademy\Models\AbstractClass;
-
+use Htmlacademy\Models\ActionExecute;
 class Task
 {
     const STATUS_NEW = "new";
@@ -22,8 +22,8 @@ class Task
 
     public function actionArray () {
         $array = [
-            self::STATUS_NEW => [new actExecute(), new actCancel()],
-            self::STATUS_EXECUTE => [new actDone(), new actDeny()],
+            self::STATUS_NEW => [new ActionExecute(), new ActionCancel()],
+            self::STATUS_EXECUTE => [new ActionDone(), new ActionDeny()],
         ];
         return $array;
     }
@@ -62,13 +62,13 @@ class Task
 
     public function getActions(string $status, int $idExecutor, int $idTaskmaker, int $idUser)
     {
-        $actions = [];
-
         $statuses  = $this->actionArray();
+
         if (!array_key_exists($status, $statuses)){
             throw CustomExeption ("No status in the action");
         }
-        $actions  = $statuses[$status];
+        $actions = $statuses[$status];
+
 
         foreach ($actions as $action) {
             if ($action->CheckRights($idExecutor, $idTaskmaker, $idUser)) {
