@@ -1,14 +1,14 @@
 <?php
 
 namespace Htmlacademy\Models;
-use Htmlacademy\Models\ci_action;
+use Htmlacademy\Models\ActionExecute;
 
 class ActionExecute extends AbstractClass
 {
     protected $publicName = "Выполнено";
     protected $innerName = "act_execute";
 
-    public function CheckRights($idExecutor, $idTaskmaker, $idUser)
+    public function checkRights(int $idExecutor, int $idTaskmaker, int $idUser):bool
     {
         return $idExecutor === $idUser;
     }
