@@ -1,8 +1,8 @@
 <?php
-
+declare(strict_types=1);
 namespace Htmlacademy\Models;
-use Htmlacademy\Models\ActionExecute;
-
+use htmlacademy\Models\ActionExecute;
+use htmlacademy\Models\AbstractClass;
 class ActionExecute extends AbstractClass
 {
     protected $publicName = "Выполнено";
