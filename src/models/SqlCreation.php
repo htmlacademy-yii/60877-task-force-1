@@ -30,9 +30,9 @@ class SqlCreation {
            }
 
            //тут ошибка
-         if (!file_exists($this->fileName)) {
-           throw new CustomException("Файл не существует");
-           }
+        // if (!file_exists($this->fileName)) {
+        //   throw new CustomException("Файл не существует");
+        //   }
 
             $this->tableName = substr($this->fileName,0,-4);
 			$this->filePath = $this->dirСsv.'/'.$this->fileName;
@@ -104,7 +104,7 @@ class SqlCreation {
 		    fwrite($newFile, $request);
 		    fclose($newFile);
 
-		    return $notice = " Файл $this->dirCsv/$this->fileName успешно обработан. Создан файл $this->dirSql.$this->tableName.sql <br/> \n";
+		    return $notice = " Файл $this->dirСsv/$this->fileName успешно обработан. Создан файл $this->dirSql.$this->tableName.sql <br/> \n";
 
 	}
 

@@ -1,4 +1,4 @@
-insert into replies (dt_add, rate, description) 
+insert into replies (dt_add, rate, deskription) 
  values (str_to_date('2019-05-09','%Y-%m-%d '), 1, 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.
 
 Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.
