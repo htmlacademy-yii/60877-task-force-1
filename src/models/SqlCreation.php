@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Htmlacademy\Models;
+namespace htmlacademy\models;
 use htmlacademy\exceptions\CustomException;
+
 error_reporting(E_ALL);
 class SqlCreation {
     private $dirСsv;

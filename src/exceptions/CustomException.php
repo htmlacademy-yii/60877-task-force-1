@@ -1,5 +1,5 @@
 <?php
-namespace Htmlacademy\Exceptions;
+namespace htmlacademy\exceptions;
 class CustomException extends \Exception
 {
 }

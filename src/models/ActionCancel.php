@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
-namespace Htmlacademy\Models;
-use Htmlacademy\Models\ActionExecute;
+namespace htmlacademy\models;
+use htmlacademy\models\ActionExecute;
 
 class ActionCancel extends AbstractClass
 {
