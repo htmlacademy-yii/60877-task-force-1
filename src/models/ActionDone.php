@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 namespace htmlacademy\models;
-use htmlacademy\models\ActionExecute;
 
 class ActionDone extends AbstractClass
 {

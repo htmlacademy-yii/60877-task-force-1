@@ -7,7 +7,6 @@ namespace Htmlacademy\Models;
 use htmlacademy\Models\ActionCancel;
 use htmlacademy\Models\ActionDeny;
 use htmlacademy\Models\ActionDone;
-use htmlacademy\Models\AbstractClass;
 use htmlacademy\Models\ActionExecute;
 use htmlacademy\Exceptions\CustomException;
 
