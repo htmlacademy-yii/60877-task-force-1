@@ -1,12 +1,17 @@
 <?php
+declare(strict_types=1);
 
 namespace Htmlacademy\Models;
 
-use Htmlacademy\Models\ActionCancel;
-use Htmlacademy\Models\ActionDeny;
-use Htmlacademy\Models\ActionDone;
-use Htmlacademy\Models\AbstractClass;
-use Htmlacademy\Models\ActionExecute;
+
+use htmlacademy\Models\ActionCancel;
+use htmlacademy\Models\ActionDeny;
+use htmlacademy\Models\ActionDone;
+use htmlacademy\Models\ActionExecute;
+use htmlacademy\Exceptions\CustomException;
+
+error_reporting(E_ALL);
+
 class Task
 {
     const STATUS_NEW = "new";
@@ -20,18 +25,27 @@ class Task
     const ACTION_CANCEL = "cancel";
     const ACTION_DENY = "deny";
 
-    public function actionArray () {
-        $array = [
-            self::STATUS_NEW => [new ActionExecute(), new ActionCancel()],
-            self::STATUS_EXECUTE => [new ActionDone(), new ActionDeny()],
-        ];
-        return $array;
-    }
-
-
     private $executerId;
     private $customerId;
     private $status = self::STATUS_NEW;
+
+
+    private $statusArray = [
+		self::STATUS_NEW => 'Новое',
+		self::STATUS_INWORK => 'В работе',
+		self::STATUS_DONE => 'Выполнено',
+		self::STATUS_FAILED => 'Провалено',
+		self::STATUS_CANCELLED => 'Отменено'
+	];
+    function showConstant() {
+        echo  self::STATUS_INWORK . "\n";
+    }
+    private $statusMap = [
+		self::ACTION_EXECUTE => self::STATUS_INWORK,
+		self::ACTION_DONE => self::STATUS_DONE,
+		self::ACTION_CANCEL => self::STATUS_CANCELLED,
+		self::ACTION_DENY => self::STATUS_FAILED
+	];
 
     public function __construct(int $customerId, int $executerId)
     {
@@ -39,33 +53,20 @@ class Task
         $this->executerId = $executerId;
     }
 
-    public function returnMapStatuses()
-    {
-        return [
-            self::STATUS_NEW => "Новое",
-            self::STATUS_EXECUTE => "В работе",
-            self::STATUS_DONE => "Выполнено",
-            self::STATUS_FAIL => "Провалено",
-            self::STATUS_CANCEL => "Отменено",
+    public function actionArray() {
+        $array = [
+            self::STATUS_NEW => [new ActionExecute(), new ActionCancel()],
+            self::STATUS_INWORK => [new ActionDone(), new ActionDeny()],
         ];
+        return $array;
     }
-
-    public function returnMapActions()
+     function getActions(string $status, int $idExecutor, int $idTaskmaker, int $idUser)
     {
-        return [
-            self::ACTION_EXECUTE => self::STATUS_EXECUTE,
-            self::ACTION_DONE => self::STATUS_DONE,
-            self::ACTION_CANCEL => self::STATUS_CANCEL,
-            self::ACTION_DENY => self::STATUS_FAIL,
-        ];
-    }
 
-    public function getActions(string $status, int $idExecutor, int $idTaskmaker, int $idUser)
-    {
-        $statuses  = $this->actionArray();
 
+      $statuses  = $this->actionArray();
         if (!array_key_exists($status, $statuses)){
-            throw CustomExeption ("No status in the action");
+            throw new CustomException("No status in the action");
         }
         $actions = $statuses[$status];
 
@@ -79,8 +80,11 @@ class Task
         return false;
     }
 
-    public function nextStatus(string $action):int
+    public function nextStatus(string $action):string
     {
+        if(!in_array($action, array_keys( $this->statusMap ))){
+			throw new CustomException("Given action does not exist.");
+		}
         $stmap = $this->statusMap[$action];
         return $this->statusArray[$stmap];
     }

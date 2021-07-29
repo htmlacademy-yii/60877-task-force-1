@@ -1,7 +1,6 @@
 <?php
-
-namespace Htmlacademy\Models;
-use Htmlacademy\Models\ActionExecute;
+declare(strict_types=1);
+namespace htmlacademy\models;
 
 class ActionExecute extends AbstractClass
 {
