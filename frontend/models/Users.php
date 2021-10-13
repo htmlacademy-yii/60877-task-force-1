@@ -102,5 +102,10 @@ class Users extends \yii\db\ActiveRecord
           $this->tags
     );
     }
+  
+    /*public function getSearchContent()
+    {
+        return $this->hasMany(Users::class, ['user_search_content'=>'id'])->viaTable('users', ['users.user_search_content'=>'id']);;
+    }*/
 }
 
