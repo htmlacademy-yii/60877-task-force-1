@@ -2555,3 +2555,14 @@ footer {
   .dz-error-mark {
     display: none !important;
   }
+  .link-regular::after {
+    position: absolute;
+    content: "";
+    width: 5px;
+    height: 5px;
+    color: #333438;
+    border-radius: 10px;
+    top: 9px;
+    left: 2px;
+    background-color: #606060;
+}
