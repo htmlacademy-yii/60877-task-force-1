@@ -72,9 +72,19 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($r=false)
     {
+        if( $r=== 'tasks'){
+ 
+            return $this->render('tasks');
+     }
+     else if( $r=== 'users'){
+ 
+        return $this->render('users');
+ }
+
         return $this->render('index');
+     
     }
 
     /**

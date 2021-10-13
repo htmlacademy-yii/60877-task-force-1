@@ -35,7 +35,7 @@
                             <p class="user__search-content">
 
 <?php foreach($item->getTagsArray() as $tagsItem):?>
-                          <a href="" class="link-regular">  <?php echo ($tagsItem);?></a>
+                          <a href="" class="link-regular">  <?php echo ($tagsItem.", ");?></a>
 
                     <?php endforeach;?>
 

@@ -12,6 +12,13 @@ use Yii;
  * @property string $name
  * @property string $password
  * @property string $dt_add
+ * @property int|null $task_id
+ * @property int|null $user_stars
+ * @property int|null $user_rating
+ * @property string|null $user_search_content
+ * @property string|null $user_was_on_site
+ * @property string|null $user_search_link
+ * @property string|null $user_img
  */
 class Users extends \yii\db\ActiveRecord
 {
@@ -30,9 +37,10 @@ class Users extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'password', 'dt_add'], 'required'],
-            [['dt_add'], 'safe'],
+            [['dt_add', 'user_was_on_site'], 'safe'],
+            [['task_id', 'user_stars', 'user_rating'], 'integer'],
             [['email'], 'string', 'max' => 20],
-            [['name', 'password'], 'string', 'max' => 255],
+            [['name', 'password', 'user_search_content', 'user_search_link', 'user_img'], 'string', 'max' => 255],
         ];
     }
 
@@ -42,11 +50,57 @@ class Users extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'email' => 'Email',
-            'name' => 'Name',
-            'password' => 'Password',
-            'dt_add' => 'Dt Add',
+            'id' => Yii::t('app', 'ID'),
+            'email' => Yii::t('app', 'Email'),
+            'name' => Yii::t('app', 'Name'),
+            'password' => Yii::t('app', 'Password'),
+            'dt_add' => Yii::t('app', 'Dt Add'),
+            'task_id' => Yii::t('app', 'Task ID'),
+            'user_stars' => Yii::t('app', 'User Stars'),
+            'user_rating' => Yii::t('app', 'User Rating'),
+            'user_search_content' => Yii::t('app', 'User Search Content'),
+            'user_was_on_site' => Yii::t('app', 'User Was On Site'),
+            'user_search_link' => Yii::t('app', 'User Search Link'),
+            'user_img' => Yii::t('app', 'User Img'),
         ];
     }
+
+    /**
+     * {@inheritdoc}
+     * @return UsersQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new UsersQuery(get_called_class());
+    }
+   /* public function getTasks()
+    {
+        return $this->hasMany(Tasks::class, ['user_id' => 'id']);
+    }*/
+    public function getActiveTasks()
+    {
+        return $this->hasMany(Tasks::class, ['user_id' => 'id'])->andWhere(['task_status'=>1]);
+    }
+
+    public function getActiveReplies()
+    {
+        return $this->hasMany(Replies::class, ['user_id' => 'id']);
+    }
+    public function getReplies()
+    {
+        return $this->hasMany(Tags::class, ['tags_attribution.attributes_id' => 'tags_attributes.id']);
+    }
+    public function getTags()
+    {
+        return $this->hasMany(TagsAttributes::class, ['id'=>'id'  ])
+                ->viaTable('tags_attribution', ['user_id' => 'id']);
+    }
+    public function getTagsArray() {
+      return array_map(function($item){
+          return $item->attributes;
+      },
+          $this->tags
+    );
+    }
 }
+
