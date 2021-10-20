@@ -73,39 +73,45 @@ class Users extends \yii\db\ActiveRecord
     {
         return new UsersQuery(get_called_class());
     }
-   /* public function getTasks()
-    {
-        return $this->hasMany(Tasks::class, ['user_id' => 'id']);
-    }*/
+
+    /* public function getTasks()
+     {
+         return $this->hasMany(Tasks::class, ['user_id' => 'id']);
+     }*/
     public function getActiveTasks()
     {
-        return $this->hasMany(Tasks::class, ['user_id' => 'id'])->andWhere(['task_status'=>1]);
+        return $this->hasMany(Tasks::class, ['user_id' => 'id'])->andWhere(['task_status' => 1]);
     }
 
     public function getActiveReplies()
     {
         return $this->hasMany(Replies::class, ['user_id' => 'id']);
     }
+
     public function getReplies()
     {
         return $this->hasMany(Tags::class, ['tags_attribution.attributes_id' => 'tags_attributes.id']);
     }
+
     public function getTags()
     {
-        return $this->hasMany(TagsAttributes::class, ['id'=>'id'  ])
-                ->viaTable('tags_attribution', ['user_id' => 'id']);
+        return $this->hasMany(TagsAttributes::class, ['id' => 'id'])
+            ->viaTable('tags_attribution', ['user_id' => 'id']);
     }
-    public function getTagsArray() {
-      return array_map(function($item){
-          return $item->attributes;
-      },
-          $this->tags
-    );
-    }
-  
-    /*public function getSearchContent()
+
+    public function getTagsArray()
     {
-        return $this->hasMany(Users::class, ['user_search_content'=>'id'])->viaTable('users', ['users.user_search_content'=>'id']);;
-    }*/
+        return array_map(function ($item) {
+            return $item->attributes;
+        },
+            $this->tags
+        );
+    }
+
+    public function wasOnSite()
+    {
+        return \Yii::$app->formatter->asDuration(strtotime('now') - strtotime($this->user_was_on_site));
+    }
+
 }
 

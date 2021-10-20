@@ -62,4 +62,10 @@ class Tasks extends \yii\db\ActiveRecord
             'long' => 'Long',
         ];
     }
+
+    public function getWasOnSite()
+    {
+
+        return \Yii::$app->formatter->asDuration(strtotime('now') - strtotime($this->start_date));
+    }
 }
