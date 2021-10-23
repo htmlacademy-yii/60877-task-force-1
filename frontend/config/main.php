@@ -1,4 +1,5 @@
 <?php
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -10,6 +11,7 @@ $config = [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'ru-RU',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [
@@ -52,6 +54,12 @@ if (YII_ENV_DEV) {
         'class' => 'yii\gii\Module',
         'allowedIPs' => ['127.0.0.1'] // регулируйте в соответствии со своими нуждами
     ];
-    
+        // configuration adjustments for 'dev' environment
+        $config['bootstrap'][] = 'debug';
+        $config['modules']['debug'] = [
+            'class' => 'yii\debug\Module',
+        ];
 }
+
 return $config;
+

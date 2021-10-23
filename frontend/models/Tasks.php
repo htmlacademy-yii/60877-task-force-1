@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -61,5 +61,11 @@ class Tasks extends \yii\db\ActiveRecord
             'lat' => 'Lat',
             'long' => 'Long',
         ];
+    }
+
+    public function getWasOnSite()
+    {
+
+        return \Yii::$app->formatter->asDuration(strtotime('now') - strtotime($this->start_date));
     }
 }

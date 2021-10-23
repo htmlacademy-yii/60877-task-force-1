@@ -1,7 +1,9 @@
 {
     "name": "htmlacademy/taskforce1",
     "description": "Yii PHP Framework my first try",
-    "require": {},
+    "require": {
+      "yiisoft/yii2-faker": "~2.0.0"
+    },
 
     "autoload": {
       "psr-4": {

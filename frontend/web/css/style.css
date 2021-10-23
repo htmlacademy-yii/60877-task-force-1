@@ -2550,9 +2550,8 @@ footer {
 .completion-form-star .star-disabled:hover {
   background-image: url("../img/star.png"); }
 
-.dz-image,
-.dz-success-mark,
-.dz-error-mark {
-  display: none !important;
-}
-/*# sourceMappingURL=style.css.map */
+  .dz-image,
+  .dz-success-mark,
+  .dz-error-mark {
+    display: none !important;
+  }
